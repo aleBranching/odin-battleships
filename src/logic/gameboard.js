@@ -2,7 +2,7 @@ import Ship from "./ship";
 
 export default function Gameboard() {
   // each number corresponds to index of currentShipsOBJ
-  let gameArena = [
+  const gameArena = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -15,7 +15,8 @@ export default function Gameboard() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
 
-  let currentShipsOBJ = [
+  const currentShipsOBJ = [
+    null,
     Ship(4),
     Ship(3),
     Ship(3),
@@ -27,17 +28,37 @@ export default function Gameboard() {
     Ship(1),
     Ship(1),
   ];
-  let _placedShips = [];
 
-  let shipNumberRulesPassed = (length) => {
-    let _allowedOccurances = {
+  const newShipIndex = (length) => {
+    let index;
+    for (let i = 0; i < 10; i++) {
+      // console.log("THIS", currentShipsOBJ[i]._length);
+      if (currentShipsOBJ[i] == null) {
+        continue;
+      }
+      if (
+        currentShipsOBJ[i]._length === length &&
+        currentShipsOBJ[i].placed === false
+      ) {
+        index = i;
+        break;
+      }
+    }
+    return index;
+  };
+
+  const _placedShips = [];
+
+  // This is broken
+  const shipNumberRulesPassed = (length) => {
+    const _allowedOccurances = {
       1: 4,
       2: 3,
       3: 2,
       4: 1,
     };
 
-    let _occurances = (target) => {
+    const _occurances = (target) => {
       let counter = 0;
       for (ship of _placedShips) {
         if (ship == target) {
@@ -51,14 +72,15 @@ export default function Gameboard() {
       _placedShips._occurances(length) < _allowedOccurances[length]
     ) {
       return true;
-    } else {
-      return false;
     }
+
+    //  WARNING: THis is broken
+    return true;
   };
 
-  let placeShip = (length, x, y, horizontally) => {
+  const placeShip = (length, x, y, horizontally) => {
     // test validity of co-ord or amount of ships
-    if (x < 0 || y < 0 || x > 10 || y > 10 || !shipNumberRulesPassed(length)) {
+    if (x < 0 || y < 0 || x > 10 || y > 10) {
       throw new Error((e) => {
         console.error(
           "can't place ship here or no more of these ships or ship too big"
@@ -66,26 +88,35 @@ export default function Gameboard() {
       });
     }
 
-    let checkCoord = (x, y, length, horizontally) => {
-      // what would they be naively
-      let naiveCoor = (() => {
-        let result = [];
+    if (!shipNumberRulesPassed) {
+      throw new Error((e) => {
+        console.error("can't put anymore of these ships");
+      });
+    }
 
-        if (horizontally) {
+    let checkedCoord;
+
+    const checkCoord = () => {
+      // what would they be naively
+
+      const naiveCoor = (() => {
+        const result = [];
+
+        if (!horizontally) {
           let newY = y;
           for (let i = 0; i < length; i++) {
             result.push([x, newY]);
             newY++;
-            if (newX >= 10) {
+            if (newY > 10) {
               throw new Error("boat out of game!");
             }
           }
-        } else if (!horizontally) {
+        } else if (horizontally) {
           let newX = x;
           for (let i = 0; i < length; i++) {
             result.push([newX, y]);
             newX++;
-            if (newX >= 10) {
+            if (newX > 10) {
               throw new Error("Boat out of game!");
             }
           }
@@ -94,39 +125,51 @@ export default function Gameboard() {
         return result;
       })();
 
-      let checkSurrounding = (naiveCoor, horizontally) => {
-        naiveCoor.forEach((element) => {
-          let x = element[0];
-          let y = element[1];
+      const checkForOverlap = () => {
+        let allowed = true;
 
-          let gameArenaCode = gameArena[x][y];
+        naiveCoor.forEach((coordinate) => {
+          const anX = coordinate[0];
+          const anY = coordinate[1];
 
-          if (gameArena != 0) {
-            // throw new Error("Already has a ship");
-            return false;
+          // in gamearena first have to access Y
+
+          if (gameArena[anY][anX] !== 0) {
+            allowed = false;
           }
         });
 
-        if (horizontally) {
-          // check below it
-          let x = naiveCoor[0][0];
-
-          let xAbove = x + 1;
-          if (x != 0 || x != 10) {
-            for (let i = 0; i < length; i++) {
-              let areaCode = gameArena[xAbove][y + 1];
-
-              if (xAbove >= 10) {
-                // throw new Error("Boat out of game!");
-                return false;
-              }
-              //   if(areaCode != 0 && ())
-            }
-          }
-
-          // check below it
-        }
+        return allowed;
       };
+
+      if (checkForOverlap()) {
+        checkedCoord = [...naiveCoor];
+        return true;
+      }
+
+      return false;
     };
+
+    if (checkCoord() && shipNumberRulesPassed(length)) {
+      const shipOBJIndex = newShipIndex(length);
+      currentShipsOBJ[shipOBJIndex].placed = true;
+      console.log("here", shipOBJIndex);
+
+      checkedCoord.forEach((aCoordinate) => {
+        const newx = aCoordinate[0];
+        const newy = aCoordinate[1];
+
+        gameArena[newy][newx] = shipOBJIndex;
+      });
+    }
   };
+
+  return { placeShip, gameArena };
 }
+
+const GameboardTestOBJ = Gameboard();
+
+GameboardTestOBJ.placeShip(3, 0, 0, true);
+GameboardTestOBJ.placeShip(3, 0, 0, false);
+
+console.log(GameboardTestOBJ.gameArena);

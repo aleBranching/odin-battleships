@@ -1,14 +1,13 @@
 export default function Ship(length) {
   let _hits = 0;
-  let _length = length;
+  const _length = length;
+  const placed = false;
 
-  let hit = () => {
+  const hit = () => {
     _hits += 1;
   };
 
-  let isSunk = () => {
-    return _hits >= _length ? true : false;
-  };
+  const isSunk = () => _hits >= _length;
 
   //   this.length = length;
 
@@ -25,5 +24,5 @@ export default function Ship(length) {
   //     //
   //   }
 
-  return { isSunk, hit };
+  return { isSunk, hit, _length, placed };
 }

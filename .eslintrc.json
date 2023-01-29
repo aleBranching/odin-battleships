@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "jest/globals": true
   },
   "extends": ["airbnb-base", "prettier"],
 
@@ -11,7 +12,10 @@
     "sourceType": "module"
   },
   "rules": {
-    "no-console": "warn"
+    "no-console": "warn",
+    "no-underscore-dangle": "off",
+    "no-unused-vars": "warn",
+    "no-plusplus": "off"
   },
   "plugins": ["jest"]
 }
