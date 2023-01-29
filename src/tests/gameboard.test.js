@@ -74,9 +74,22 @@ test("added 2 ship of length 3 horizontaly by the right edge", () => {
   ]);
 });
 
-test("Overlapping ships", () => {
+test.only("added too many ships of length 3 horizontaly by the right edge", () => {
   const GameboardTestOBJ = Gameboard();
-  GameboardTestOBJ.placeShip(3, 0, 0, true);
-  GameboardTestOBJ.placeShip(3, 0, 0, false);
-  // expect(.toThrow();
+  GameboardTestOBJ.placeShip(3, 7, 0, true);
+  GameboardTestOBJ.placeShip(3, 7, 3, true);
+  GameboardTestOBJ.placeShip(3, 7, 4, true);
+
+  expect(GameboardTestOBJ.gameArena).toStrictEqual([
+    [0, 0, 0, 0, 0, 0, 0, 2, 2, 2],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 3, 3, 3],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ]);
 });

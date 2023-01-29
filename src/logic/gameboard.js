@@ -49,7 +49,6 @@ export default function Gameboard() {
 
   const _placedShips = [];
 
-  // This is broken
   const shipNumberRulesPassed = (length) => {
     const _allowedOccurances = {
       1: 4,
@@ -57,25 +56,23 @@ export default function Gameboard() {
       3: 2,
       4: 1,
     };
+    let lengthOcccured = 0;
+    const _occurances = (targetLength) => {
+      // let counter = 0;
 
-    const _occurances = (target) => {
-      let counter = 0;
-      for (ship of _placedShips) {
-        if (ship == target) {
-          counter++;
+      for (let i = 0; i < _placedShips.length; i++) {
+        if (_placedShips[i] === length) {
+          lengthOcccured++;
         }
       }
     };
+    _occurances();
 
-    if (
-      _placedShips.includes(length) &&
-      _placedShips._occurances(length) < _allowedOccurances[length]
-    ) {
+    if (lengthOcccured < _allowedOccurances[length]) {
       return true;
     }
 
-    //  WARNING: THis is broken
-    return true;
+    return false;
   };
 
   const placeShip = (length, x, y, horizontally) => {
@@ -150,10 +147,11 @@ export default function Gameboard() {
       return false;
     };
 
+    console.log("THIS", shipNumberRulesPassed(length));
     if (checkCoord() && shipNumberRulesPassed(length)) {
       const shipOBJIndex = newShipIndex(length);
       currentShipsOBJ[shipOBJIndex].placed = true;
-      console.log("here", shipOBJIndex);
+      _placedShips.push(length);
 
       checkedCoord.forEach((aCoordinate) => {
         const newx = aCoordinate[0];
@@ -166,10 +164,3 @@ export default function Gameboard() {
 
   return { placeShip, gameArena };
 }
-
-const GameboardTestOBJ = Gameboard();
-
-GameboardTestOBJ.placeShip(3, 0, 0, true);
-GameboardTestOBJ.placeShip(3, 0, 0, false);
-
-console.log(GameboardTestOBJ.gameArena);
