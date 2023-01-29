@@ -1,16 +1,10 @@
 import Gameboard from "./gameboard";
+import UIcontroller from "./UIcontroller";
 
 console.log("test");
 console.log("change");
 
-function getBoxDOM(area, x, y) {
-  return document.querySelector(
-    // .row[data-x="0"] .box[data-y="0"] {
-    `.${area} .row[data-x="${x}"] .box[data-y="${y}"]`
-  );
-}
-
-const test = getBoxDOM("enemyArea", 0, 0);
+// const test = getBoxDOM("enemyArea", 0, 0);
 
 const gameLoop = () => {
   const gameOver = false;
@@ -26,24 +20,38 @@ const gameLoop = () => {
   // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
+  const setUpPlacements = (gameboard1, gameboard2) => {
+    gameboard1.placeShip(4, 0, 0, true);
+    gameboard1.placeShip(3, 6, 0, true);
+    gameboard1.placeShip(3, 0, 1, true);
+    gameboard1.placeShip(2, 0, 3, true);
+    gameboard1.placeShip(2, 0, 5, true);
+    gameboard1.placeShip(2, 9, 6, false);
+    gameboard1.placeShip(1, 2, 7, true);
+    gameboard1.placeShip(1, 3, 8, true);
+    gameboard1.placeShip(1, 4, 9, true);
+    gameboard1.placeShip(1, 7, 9, true);
+
+    gameboard2.placeShip(4, 0, 0, true);
+    gameboard2.placeShip(3, 6, 0, true);
+    gameboard2.placeShip(3, 0, 1, true);
+    gameboard2.placeShip(2, 0, 3, true);
+    gameboard2.placeShip(2, 0, 5, true);
+    gameboard2.placeShip(2, 9, 6, false);
+    gameboard2.placeShip(1, 2, 7, true);
+    gameboard2.placeShip(1, 3, 8, true);
+    gameboard2.placeShip(1, 4, 9, true);
+    gameboard2.placeShip(1, 7, 9, true);
+  };
+
   //   while (!gameOver) {
   const playerGameboard = Gameboard();
   const enemyGameboard = Gameboard();
+  setUpPlacements(playerGameboard, enemyGameboard);
 
-  playerGameboard.placeShip(4, 0, 0, true);
-  playerGameboard.placeShip(3, 6, 0, true);
-  playerGameboard.placeShip(3, 0, 1, true);
-  playerGameboard.placeShip(2, 0, 3, true);
-  playerGameboard.placeShip(2, 0, 5, true);
-  playerGameboard.placeShip(2, 9, 6, false);
-  playerGameboard.placeShip(1, 2, 7, true);
-  playerGameboard.placeShip(1, 3, 8, true);
-  playerGameboard.placeShip(1, 4, 9, true);
-  playerGameboard.placeShip(1, 7, 9, true);
+  UIcontroller.renderExistingBoats(playerGameboard, "playerArea");
 
-  console.table(playerGameboard.gameArena);
   //   }
 };
 
 gameLoop();
-console.log(test);

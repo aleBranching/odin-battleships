@@ -153,6 +153,7 @@ export default function Gameboard() {
       currentShipsOBJ[shipOBJIndex].placed = true;
       _placedShips.push(length);
 
+      currentShipsOBJ[shipOBJIndex].coordinates = checkedCoord;
       checkedCoord.forEach((aCoordinate) => {
         const newx = aCoordinate[0];
         const newy = aCoordinate[1];
