@@ -1,0 +1,83 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap") */
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  background-color: beige;
+  --header-height: 6vh;
+  /* --main-area-height: calc(100- (var(--header-height))); */
+  --main-area-height: calc(100vh - var(--header-height));
+}
+
+.title {
+  /* text-align: center; */
+  font-family: "Bebas Neue", cursive;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  /* padding: 0.5rem; */
+  height: 6vh;
+}
+
+.gameArea {
+  height: var(--main-area-height);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.playerArea {
+  border: 2px solid black;
+  height: 30vw;
+  width: 30vw;
+}
+
+.enemyArea {
+  border: 2px solid red;
+  height: 30vw;
+  width: 30vw;
+}
+
+/* colouring box borders */
+.row:not(:last-child) {
+  border-bottom: 1px solid black;
+}
+
+/* colouring box borders */
+.box:not(:last-child) {
+  border-right: 1px solid black;
+}
+
+.row {
+  height: 10%;
+  width: 100%;
+}
+.box {
+  height: 100%;
+  width: 10%;
+}
+
+.row {
+  display: flex;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .box:hover {
+    background-color: pink;
+  }
+}
+
+.enemyArea,
+.playerArea {
+  cursor: crosshair;
+}

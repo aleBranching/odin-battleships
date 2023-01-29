@@ -5,6 +5,7 @@
     "jest/globals": true
   },
   "extends": ["airbnb-base", "prettier"],
+  "ignorePatterns": ["main.js"],
 
   "overrides": [],
   "parserOptions": {
@@ -15,7 +16,8 @@
     "no-console": "warn",
     "no-underscore-dangle": "off",
     "no-unused-vars": "warn",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "no-continue": "off"
   },
   "plugins": ["jest"]
 }

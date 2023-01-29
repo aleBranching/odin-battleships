@@ -147,7 +147,7 @@ export default function Gameboard() {
       return false;
     };
 
-    console.log("THIS", shipNumberRulesPassed(length));
+    // console.log("THIS", shipNumberRulesPassed(length));
     if (checkCoord() && shipNumberRulesPassed(length)) {
       const shipOBJIndex = newShipIndex(length);
       currentShipsOBJ[shipOBJIndex].placed = true;
@@ -161,6 +161,36 @@ export default function Gameboard() {
       });
     }
   };
+  const missedShots = [];
 
-  return { placeShip, gameArena };
+  const receiveAttack = (x, y) => {
+    if (gameArena[y][x] !== 0) {
+      const shipOBJIndex = gameArena[y][x];
+      currentShipsOBJ[shipOBJIndex].hit();
+    } else {
+      missedShots.push([x, y]);
+    }
+  };
+
+  const allShipsSunk = () => {
+    let counter = 0;
+    for (let i = 1; i < 11; i++) {
+      if (currentShipsOBJ[i].isSunk()) {
+        counter++;
+      }
+    }
+    if (counter >= 10) {
+      return true;
+    }
+    return false;
+  };
+
+  return {
+    placeShip,
+    gameArena,
+    receiveAttack,
+    allShipsSunk,
+    missedShots,
+    currentShipsOBJ,
+  };
 }

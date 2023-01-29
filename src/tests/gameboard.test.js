@@ -74,7 +74,7 @@ test("added 2 ship of length 3 horizontaly by the right edge", () => {
   ]);
 });
 
-test.only("added too many ships of length 3 horizontaly by the right edge", () => {
+test("added too many ships of length 3 horizontaly by the right edge", () => {
   const GameboardTestOBJ = Gameboard();
   GameboardTestOBJ.placeShip(3, 7, 0, true);
   GameboardTestOBJ.placeShip(3, 7, 3, true);
@@ -92,4 +92,48 @@ test.only("added too many ships of length 3 horizontaly by the right edge", () =
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
+});
+
+test("added 2 ship of length 3 horizontaly by the right edge", () => {
+  const GameboardTestOBJ = Gameboard();
+  GameboardTestOBJ.placeShip(3, 7, 0, true);
+  GameboardTestOBJ.placeShip(3, 7, 3, true);
+  GameboardTestOBJ.receiveAttack(0, 0);
+
+  expect(GameboardTestOBJ.missedShots).toStrictEqual([[0, 0]]);
+});
+
+test("checking a missed shot", () => {
+  const GameboardTestOBJ = Gameboard();
+  GameboardTestOBJ.placeShip(3, 7, 0, true);
+  GameboardTestOBJ.placeShip(3, 7, 3, true);
+  GameboardTestOBJ.receiveAttack(0, 0);
+
+  expect(GameboardTestOBJ.missedShots).toStrictEqual([[0, 0]]);
+});
+
+test("hitting a ship", () => {
+  const GameboardTestOBJ = Gameboard();
+  GameboardTestOBJ.placeShip(3, 7, 0, true);
+  GameboardTestOBJ.placeShip(3, 7, 3, true);
+  GameboardTestOBJ.receiveAttack(7, 0);
+  GameboardTestOBJ.receiveAttack(8, 0);
+  GameboardTestOBJ.receiveAttack(9, 0);
+
+  expect(GameboardTestOBJ.currentShipsOBJ[2].isSunk()).toEqual(true);
+});
+
+test("all ships sunk", () => {
+  const GameboardTestOBJ = Gameboard();
+  GameboardTestOBJ.placeShip(3, 7, 0, true);
+  GameboardTestOBJ.placeShip(3, 7, 3, true);
+  GameboardTestOBJ.receiveAttack(7, 0);
+  GameboardTestOBJ.receiveAttack(8, 0);
+  GameboardTestOBJ.receiveAttack(9, 0);
+
+  GameboardTestOBJ.receiveAttack(7, 3);
+  GameboardTestOBJ.receiveAttack(8, 3);
+  GameboardTestOBJ.receiveAttack(9, 3);
+
+  expect(GameboardTestOBJ.currentShipsOBJ[2].isSunk()).toEqual(true);
 });
