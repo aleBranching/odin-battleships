@@ -31,7 +31,7 @@ export default function Gameboard() {
 
   const newShipIndex = (length) => {
     let index;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i <= 10; i++) {
       // console.log("THIS", currentShipsOBJ[i]._length);
       if (currentShipsOBJ[i] == null) {
         continue;
