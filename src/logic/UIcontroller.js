@@ -18,89 +18,43 @@ export default (function UIcontroller() {
     });
   };
 
-  let turnAllowed = true;
-  const enemyBoxDOMListener = (gameArena) => {
-    const getXandY = (e) => {
-      const { y } = e.target.dataset;
-      const { x } = e.target.parentElement.dataset;
+  const changeBoxColour = (area, x, y, colour) => {
+    const hitBoxDOM = getBoxDOM(area, x, y);
+    hitBoxDOM.style.backgroundColor = colour;
+  };
 
-      return [x, y];
-    };
+  const toggleHovering = () => {
+    const area = document.querySelector(".enemyArea");
+    area.classList.toggle("hovering");
+  };
 
-    const renderingHits = (e) => {
-      if (e.target.dataset.hit !== true) {
-        turnAllowed = false;
-        const [x, y] = getXandY(e);
-        e.target.dataset.hit = "true";
+  const getBoxDOMsShipIndex = (gameArena, x, y) => {
+    const shipIndex = gameArena.gameArena[y][x];
+    return shipIndex;
+  };
 
-        const attackResult = gameArena.receiveAttack(x, y);
-
-        const hitBoxDOM = getBoxDOM("enemyArea", x, y);
-        if (attackResult) {
-          hitBoxDOM.style.backgroundColor = "gray";
-          const shipIndex = gameArena.gameArena[y][x];
-
-          if (gameArena.currentShipsOBJ[shipIndex].isSunk()) {
-            const { coordinates } = gameArena.currentShipsOBJ[shipIndex];
-
-            coordinates.forEach((aCoord) => {
-              const [shipX, shipY] = aCoord;
-              getBoxDOM("enemyArea", shipX, shipY).style.backgroundColor =
-                "red";
-            });
-          }
-          if (gameArena.allShipsSunk()) {
-            // alert("gameOver");
-          }
-        } else {
-          hitBoxDOM.style.backgroundColor = "rgb(190, 146, 154)";
-        }
-      }
-    };
-
-    document.querySelectorAll(`.enemyArea .row .box`).forEach((aBox) => {
-      aBox.addEventListener(
-        "click",
-        (e) => {
-          //   console.log("here");
-          if (turnAllowed) {
-            renderingHits(e);
-          }
-        },
-        { once: true }
-      );
+  const changeAllBoxesOfShip = (shipIndex, areaClass, gameArena) => {
+    const { coordinates } = gameArena.currentShipsOBJ[shipIndex];
+    coordinates.forEach((aCoord) => {
+      const [shipX, shipY] = aCoord;
+      getBoxDOM(`${areaClass}`, shipX, shipY).style.backgroundColor = "red";
     });
   };
 
-  const renderingEnemyHits = (x, y) => {
-    if (true) {
-      //   turnAllowed = false;
-      //   const [x, y] = getXandY(e);
-      //   e.target.dataset.hit = "true";
+  const getXandY = (e) => {
+    const { y } = e.target.dataset;
+    const { x } = e.target.parentElement.dataset;
 
-      const attackResult = gameArena.receiveAttack(x, y);
-
-      const hitBoxDOM = getBoxDOM("enemyArea", x, y);
-      if (attackResult) {
-        hitBoxDOM.style.backgroundColor = "gray";
-        const shipIndex = gameArena.gameArena[y][x];
-
-        if (gameArena.currentShipsOBJ[shipIndex].isSunk()) {
-          const { coordinates } = gameArena.currentShipsOBJ[shipIndex];
-
-          coordinates.forEach((aCoord) => {
-            const [shipX, shipY] = aCoord;
-            getBoxDOM("enemyArea", shipX, shipY).style.backgroundColor = "red";
-          });
-        }
-        if (gameArena.allShipsSunk()) {
-          // alert("gameOver");
-        }
-      } else {
-        hitBoxDOM.style.backgroundColor = "rgb(190, 146, 154)";
-      }
-    }
+    return [x, y];
   };
 
-  return { renderExistingBoats, getBoxDOM, enemyBoxDOMListener, turnAllowed };
+  return {
+    renderExistingBoats,
+    getBoxDOM,
+    getXandY,
+    changeAllBoxesOfShip,
+    getBoxDOMsShipIndex,
+    changeBoxColour,
+    toggleHovering,
+  };
 })();

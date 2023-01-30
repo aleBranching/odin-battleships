@@ -3,8 +3,8 @@ export default function enemyPlayer(humanBoard) {
 
   const movesDone = [];
   const getRandomCoord = () => {
-    const x = Math.random() * 9;
-    const y = Math.random() * 9;
+    const x = Math.floor(Math.random() * 9);
+    const y = Math.floor(Math.random() * 9);
     if (movesDone.includes([x, y])) {
       getRandomCoord();
     }
@@ -13,6 +13,7 @@ export default function enemyPlayer(humanBoard) {
 
   const attack = () => {
     const [x, y] = getRandomCoord();
+    console.log("random coord", x, y);
 
     const isHit = humanBoard.receiveAttack(x, y);
     movesDone.push([x, y]);
