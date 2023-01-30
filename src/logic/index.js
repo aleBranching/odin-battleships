@@ -1,5 +1,7 @@
 import Gameboard from "./gameboard";
 import UIcontroller from "./UIcontroller";
+import enemyPlayer from "./computerPlayer";
+// import enemyPlayer from "./computerPlayer";
 
 console.log("test");
 console.log("change");
@@ -51,6 +53,10 @@ const gameLoop = () => {
 
   UIcontroller.renderExistingBoats(playerGameboard, "playerArea");
   UIcontroller.enemyBoxDOMListener(enemyGameboard);
+  console.log("happens");
+
+  //   const enemyBot = enemyPlayer(playerGameboard);
+  //   const [isHit, enemyX, enemyY] = enemyPlayer.attack();
 
   //   }
 };

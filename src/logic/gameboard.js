@@ -140,7 +140,6 @@ export default function Gameboard() {
       };
 
       if (checkForOverlap()) {
-        console.log("The naive coord", length, naiveCoor);
         checkedCoord = [...naiveCoor];
         return true;
       }
@@ -169,9 +168,10 @@ export default function Gameboard() {
     if (gameArena[y][x] !== 0) {
       const shipOBJIndex = gameArena[y][x];
       currentShipsOBJ[shipOBJIndex].hit();
-    } else {
-      missedShots.push([x, y]);
+      return true;
     }
+    missedShots.push([x, y]);
+    return false;
   };
 
   const allShipsSunk = () => {

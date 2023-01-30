@@ -5,17 +5,18 @@ export default function enemyPlayer(humanBoard) {
   const getRandomCoord = () => {
     const x = Math.random() * 9;
     const y = Math.random() * 9;
-
+    if (movesDone.includes([x, y])) {
+      getRandomCoord();
+    }
     return [x, y];
   };
 
   const attack = () => {
     const [x, y] = getRandomCoord();
-    if (movesDone.includes([x, y])) {
-      return;
-    }
-    humanBoard.receiveAttack(x, y);
+
+    const isHit = humanBoard.receiveAttack(x, y);
     movesDone.push([x, y]);
+    return [isHit, x, y];
   };
 
   return { attack, movesDone };
