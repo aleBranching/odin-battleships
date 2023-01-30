@@ -50,6 +50,7 @@ const gameLoop = () => {
   setUpPlacements(playerGameboard, enemyGameboard);
 
   UIcontroller.renderExistingBoats(playerGameboard, "playerArea");
+  UIcontroller.enemyBoxDOMListener(enemyGameboard);
 
   //   }
 };

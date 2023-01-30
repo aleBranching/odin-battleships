@@ -140,6 +140,7 @@ export default function Gameboard() {
       };
 
       if (checkForOverlap()) {
+        console.log("The naive coord", length, naiveCoor);
         checkedCoord = [...naiveCoor];
         return true;
       }
