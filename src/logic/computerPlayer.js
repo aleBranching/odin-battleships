@@ -2,11 +2,16 @@ export default function enemyPlayer(humanBoard) {
   // min is inclusive max is exclusive
 
   const movesDone = [];
+  console.log(movesDone);
   const getRandomCoord = () => {
-    const x = Math.floor(Math.random() * 9);
-    const y = Math.floor(Math.random() * 9);
-    if (movesDone.includes([x, y])) {
-      getRandomCoord();
+    const x = Math.floor(Math.random() * 10);
+    const y = Math.floor(Math.random() * 10);
+    const foundElement = movesDone.find(
+      (element) => element[0] === x && element[1] === y
+    );
+
+    if (foundElement !== undefined) {
+      return getRandomCoord();
     }
     return [x, y];
   };
@@ -20,5 +25,5 @@ export default function enemyPlayer(humanBoard) {
     return [isHit, x, y];
   };
 
-  return { attack, movesDone };
+  return { attack };
 }

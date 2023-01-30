@@ -3,9 +3,6 @@ import UIcontroller from "./UIcontroller";
 import enemyPlayer from "./computerPlayer";
 // import enemyPlayer from "./computerPlayer";
 
-console.log("test");
-console.log("change");
-
 // const test = getBoxDOM("enemyArea", 0, 0);
 
 const gameLoop = () => {
@@ -60,14 +57,14 @@ const gameLoop = () => {
     const boxDom = e.target;
     const [x, y] = UIcontroller.getXandY(e);
     const shipIndex = UIcontroller.getBoxDOMsShipIndex(enemyGameboard, x, y);
-    console.log("evaluating", boxDom.dataset.hit);
+    // console.log("evaluating", boxDom.dataset.hit);
 
     if (!boxDom.dataset.hit) {
       boxDom.dataset.hit = true;
       rmvEventListenerAndEnemyTurn();
       //   console.log("boom");
       const attackResult = enemyGameboard.receiveAttack(x, y);
-      console.log("attackResult", attackResult);
+      //   console.log("attackResult", attackResult);
       if (attackResult) {
         const shipOBJ = enemyGameboard.currentShipsOBJ[shipIndex];
         boxDom.style.backgroundColor = "grey";
@@ -91,7 +88,7 @@ const gameLoop = () => {
       enemyTurn();
     }
 
-    console.log(shipIndex);
+    // console.log(shipIndex);
   };
 
   const playersTurn = () => {
@@ -108,12 +105,12 @@ const gameLoop = () => {
     UIcontroller.toggleHovering();
   };
 
+  const enemyBot = enemyPlayer(playerGameboard);
   const enemyTurn = () => {
     if (!gameOK) {
       return;
     }
     //   enemy's turn
-    const enemyBot = enemyPlayer(playerGameboard);
     //   console.log(enemyBot);
     const [isHit, x, y] = enemyBot.attack();
 
@@ -137,7 +134,7 @@ const gameLoop = () => {
         );
       }
     } else {
-      console.log(boxDOM);
+      //   console.log(boxDOM);
       boxDOM.style.backgroundColor = "rgb(190, 146, 154)";
       playersTurn();
     }
