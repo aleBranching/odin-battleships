@@ -18,27 +18,64 @@ const gameLoop = () => {
   // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
   const setUpPlacements = (gameboard1, gameboard2) => {
-    gameboard1.placeShip(4, 0, 0, true);
-    gameboard1.placeShip(3, 6, 0, true);
-    gameboard1.placeShip(3, 0, 1, true);
-    gameboard1.placeShip(2, 0, 3, true);
-    gameboard1.placeShip(2, 0, 5, true);
-    gameboard1.placeShip(2, 9, 6, false);
-    gameboard1.placeShip(1, 2, 7, true);
-    gameboard1.placeShip(1, 3, 8, true);
-    gameboard1.placeShip(1, 4, 9, true);
-    gameboard1.placeShip(1, 7, 9, true);
+    // gameboard1.placeShip(3, 6, 0, true);
+    // gameboard1.placeShip(3, 0, 1, true);
+    // gameboard1.placeShip(2, 0, 3, true);
+    // gameboard1.placeShip(2, 0, 5, true);
+    // gameboard1.placeShip(2, 9, 6, false);
+    // gameboard1.placeShip(1, 2, 7, true);
+    // gameboard1.placeShip(1, 3, 8, true);
+    // gameboard1.placeShip(1, 4, 9, true);
+    // gameboard1.placeShip(1, 7, 9, true);
+    // // debugger;
+    // gameboard1.placeShip(4, 0, 0, true);
+    // console.log(result);
+    gameboard1.placeShipRandomly(4);
+    gameboard1.placeShipRandomly(3);
+    gameboard1.placeShipRandomly(3);
+    gameboard1.placeShipRandomly(2);
+    gameboard1.placeShipRandomly(2);
+    gameboard1.placeShipRandomly(2);
+    gameboard1.placeShipRandomly(1);
+    gameboard1.placeShipRandomly(1);
+    gameboard1.placeShipRandomly(1);
+    gameboard1.placeShipRandomly(1);
 
-    gameboard2.placeShip(4, 0, 0, true);
-    gameboard2.placeShip(3, 6, 0, true);
-    gameboard2.placeShip(3, 0, 1, true);
-    gameboard2.placeShip(2, 0, 3, true);
-    gameboard2.placeShip(2, 0, 5, true);
-    gameboard2.placeShip(2, 9, 6, false);
-    gameboard2.placeShip(1, 2, 7, true);
-    gameboard2.placeShip(1, 3, 8, true);
-    gameboard2.placeShip(1, 4, 9, true);
-    gameboard2.placeShip(1, 7, 9, true);
+    // gameboard1.placeShipRandomly(4);
+    // gameboard1.placeShipRandomly(3);
+    // gameboard1.placeShipRandomly(3);
+    // gameboard1.placeShipRandomly(2);
+    // gameboard1.placeShipRandomly(2);
+    // gameboard1.placeShipRandomly(2);
+    // gameboard1.placeShipRandomly(1);
+    // gameboard1.placeShipRandomly(1);
+    // gameboard1.placeShipRandomly(1);
+    // gameboard1.placeShipRandomly(1);
+    // debugger;
+    gameboard2.placeShipRandomly(4);
+    gameboard2.placeShipRandomly(3);
+    gameboard2.placeShipRandomly(3);
+    gameboard2.placeShipRandomly(2);
+    gameboard2.placeShipRandomly(2);
+    gameboard2.placeShipRandomly(2);
+    gameboard2.placeShipRandomly(1);
+    gameboard2.placeShipRandomly(1);
+    gameboard2.placeShipRandomly(1);
+    gameboard2.placeShipRandomly(1);
+
+    // const result = gameboard1.placeShip(1, 0, 0, true);
+    // console.log(result);
+
+    // gameboard2.placeShip(4, 0, 0, true);
+    // gameboard2.placeShip(3, 6, 0, true);
+    // gameboard2.placeShip(3, 0, 1, true);
+    // gameboard2.placeShip(2, 0, 3, true);
+    // gameboard2.placeShip(2, 0, 5, true);
+    // gameboard2.placeShip(2, 9, 6, false);
+    // gameboard2.placeShip(1, 2, 7, true);
+    // gameboard2.placeShip(1, 3, 8, true);
+    // gameboard2.placeShip(1, 4, 9, true);
+    // gameboard2.placeShip(1, 7, 9, true);
   };
 
   //   debugger;
@@ -82,7 +119,7 @@ const gameLoop = () => {
           //   removingEventListeners();
         }
       } else {
-        boxDom.style.backgroundColor = "rgb(190, 146, 154)";
+        boxDom.style.backgroundColor = "rgb(201, 201, 178)";
         // removingEventListeners();
       }
       enemyTurn();
@@ -135,7 +172,7 @@ const gameLoop = () => {
       }
     } else {
       //   console.log(boxDOM);
-      boxDOM.style.backgroundColor = "rgb(190, 146, 154)";
+      boxDOM.style.backgroundColor = "rgb(201, 201, 178)";
       playersTurn();
     }
   };

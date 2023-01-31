@@ -15,9 +15,18 @@ body {
   --header-height: 6vh;
   /* --main-area-height: calc(100- (var(--header-height))); */
   --main-area-height: calc(100vh - var(--header-height));
-  --grey-pink: rgb(190, 146, 154);
+  --grey-beige: rgb(201, 201, 178);
   --area-with: 30vw;
   --area-height: 30vh;
+}
+
+dialog {
+  position: absolute;
+  translate: 0% -50%;
+  top: 50%;
+}
+dialog button {
+  /* margin: auto; */
 }
 
 .title {
@@ -42,6 +51,13 @@ body {
 .playerArea {
   border: 2px solid black;
   height: var(--area-with);
+  width: var(--area-with);
+}
+
+.positionArea {
+  border: 2px solid black;
+  height: var(--area-with);
+  height: 5;
   width: var(--area-with);
 }
 

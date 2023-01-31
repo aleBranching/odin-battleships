@@ -15,6 +15,19 @@ export default function Gameboard() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
 
+  const positionGameArena = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ];
+
   const currentShipsOBJ = [
     null,
     Ship(4),
@@ -73,6 +86,31 @@ export default function Gameboard() {
     }
 
     return false;
+  };
+
+  const getRandomCoord = () => {
+    const x = Math.floor(Math.random() * 10);
+    const y = Math.floor(Math.random() * 10);
+    return [x, y];
+  };
+
+  const getTrueOrFalse = () => {
+    const number = Math.floor(Math.random() * 2);
+    if (number === 1) {
+      return true;
+    }
+    return false;
+  };
+
+  const placeShipRandomly = (length) => {
+    const [x, y] = getRandomCoord();
+    const horizontally = getTrueOrFalse();
+
+    try {
+      placeShip(length, x, y, horizontally);
+    } catch (e) {
+      return placeShipRandomly(length);
+    }
   };
 
   const placeShip = (length, x, y, horizontally) => {
@@ -160,6 +198,92 @@ export default function Gameboard() {
 
         gameArena[newy][newx] = shipOBJIndex;
       });
+    } else {
+      throw new Error("most likely ship is overlaping");
+    }
+  };
+
+  const positionShipRandomly = (fakeArena, length, x, y, horizontally) => {
+    // test validity of co-ord or amount of ships
+    if (x < 0 || y < 0 || x > 10 || y > 10) {
+      throw new Error((e) => {
+        console.error(
+          "can't place ship here or no more of these ships or ship too big"
+        );
+      });
+    }
+
+    let checkedCoord;
+
+    const checkCoord = () => {
+      // what would they be naively
+
+      const naiveCoor = (() => {
+        const result = [];
+
+        if (!horizontally) {
+          let newY = y;
+          for (let i = 0; i < length; i++) {
+            result.push([x, newY]);
+            newY++;
+            if (newY > 10) {
+              throw new Error("boat out of game!");
+            }
+          }
+        } else if (horizontally) {
+          let newX = x;
+          for (let i = 0; i < length; i++) {
+            result.push([newX, y]);
+            newX++;
+            if (newX > 10) {
+              throw new Error("Boat out of game!");
+            }
+          }
+        }
+
+        return result;
+      })();
+
+      const checkForOverlap = () => {
+        let allowed = true;
+
+        naiveCoor.forEach((coordinate) => {
+          const anX = coordinate[0];
+          const anY = coordinate[1];
+
+          // in gamearena first have to access Y
+
+          if (positionGameArena[anY][anX] !== 0) {
+            allowed = false;
+          }
+        });
+
+        return allowed;
+      };
+
+      if (checkForOverlap()) {
+        checkedCoord = [...naiveCoor];
+        return true;
+      }
+
+      return false;
+    };
+
+    // console.log("THIS", shipNumberRulesPassed(length));
+    if (checkCoord()) {
+      // const shipOBJIndex = newShipIndex(length);
+      // currentShipsOBJ[shipOBJIndex].placed = true;
+      // _placedShips.push(length);
+
+      // currentShipsOBJ[shipOBJIndex].coordinates = checkedCoord;
+      checkedCoord.forEach((aCoordinate) => {
+        const newx = aCoordinate[0];
+        const newy = aCoordinate[1];
+
+        gameArena[newy][newx] = 1;
+      });
+    } else {
+      throw new Error("most likely ship is overlaping");
     }
   };
   const missedShots = [];
@@ -194,5 +318,6 @@ export default function Gameboard() {
     allShipsSunk,
     missedShots,
     currentShipsOBJ,
+    placeShipRandomly,
   };
 }

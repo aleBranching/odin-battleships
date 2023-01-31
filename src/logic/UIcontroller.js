@@ -12,6 +12,7 @@ export default (function UIcontroller() {
     gameArena.currentShipsOBJ.forEach((aShip) => {
       if (aShip == null) {
         // null
+        // console.log("here", aShip);
       } else {
         aShip.coordinates.forEach(updateEachDOMCoordinate);
       }
