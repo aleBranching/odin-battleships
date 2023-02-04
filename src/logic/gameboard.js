@@ -310,6 +310,7 @@ export default function Gameboard() {
     }
     return false;
   };
+  console.log("test");
 
   return {
     placeShip,
