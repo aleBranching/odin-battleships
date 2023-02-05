@@ -1,9 +1,36 @@
 import Gameboard from "./gameboard";
 import UIcontroller from "./UIcontroller";
 import enemyPlayer from "./computerPlayer";
+// import { cli } from "webpack";
 // import enemyPlayer from "./computerPlayer";
 
 // const test = getBoxDOM("enemyArea", 0, 0);
+
+const randomiseBTN = document.querySelector("#randomise");
+const submitPlacements = document.querySelector("#submit");
+const templateDialog = document.querySelector("#templateDialog");
+
+let templatePositions = [];
+let templateArena;
+
+randomiseBTN.addEventListener("click", () => {
+  UIcontroller.resetTemplateColours();
+  const testGameboard = Gameboard();
+  const [result, positionGameArena] =
+    testGameboard.positionAllShipsRandomlyTemplate();
+
+  templateArena = positionGameArena;
+  templatePositions = result;
+  console.log("the positions", result);
+  console.table(positionGameArena);
+  UIcontroller.renderTemplateBoats(positionGameArena);
+});
+
+submitPlacements.addEventListener("click", () => {
+  templateDialog.close();
+
+  gameLoop(templatePositions);
+});
 
 const gameLoop = () => {
   // [4, 4, 4, 4, 0, 0, 0, 0, 0, 0],
@@ -18,7 +45,7 @@ const gameLoop = () => {
   // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
   const setUpPlacements = (gameboard1, gameboard2) => {
-    // gameboard1.placeShip(3, 6, 0, true);
+    // gameboard1.placeShip(3, 6, 0, true);playerGameboard
     // gameboard1.placeShip(3, 0, 1, true);
     // gameboard1.placeShip(2, 0, 3, true);
     // gameboard1.placeShip(2, 0, 5, true);
@@ -29,17 +56,32 @@ const gameLoop = () => {
     // gameboard1.placeShip(1, 7, 9, true);
     // // debugger;
     // gameboard1.placeShip(4, 0, 0, true);
-    // console.log(result);
-    gameboard1.placeShipRandomly(4);
-    gameboard1.placeShipRandomly(3);
-    gameboard1.placeShipRandomly(3);
-    gameboard1.placeShipRandomly(2);
-    gameboard1.placeShipRandomly(2);
-    gameboard1.placeShipRandomly(2);
-    gameboard1.placeShipRandomly(1);
-    gameboard1.placeShipRandomly(1);
-    gameboard1.placeShipRandomly(1);
-    gameboard1.placeShipRandomly(1);
+    // debugger;
+
+    for (let i = 0; i < 10; i++) {
+      gameboard1.placeShip(
+        templatePositions[i].length,
+        templatePositions[i].x,
+        templatePositions[i].y,
+        templatePositions[i].horizontally
+      );
+    }
+
+    console.table(gameboard1.gameArena);
+    console.table(templateArena);
+
+    for (let i = 0; i < 10; i++) {
+      gameboard2.placeShip(
+        templatePositions[i].length,
+        templatePositions[i].x,
+        templatePositions[i].y,
+        templatePositions[i].horizontally
+      );
+    }
+
+    console.log("enemyBoard");
+    console.table(gameboard2.gameArena);
+    console.log("object of 4 coord", gameboard2.currentShipsOBJ[1].coordinates);
 
     // gameboard1.placeShipRandomly(4);
     // gameboard1.placeShipRandomly(3);
@@ -52,16 +94,18 @@ const gameLoop = () => {
     // gameboard1.placeShipRandomly(1);
     // gameboard1.placeShipRandomly(1);
     // debugger;
-    gameboard2.placeShipRandomly(4);
-    gameboard2.placeShipRandomly(3);
-    gameboard2.placeShipRandomly(3);
-    gameboard2.placeShipRandomly(2);
-    gameboard2.placeShipRandomly(2);
-    gameboard2.placeShipRandomly(2);
-    gameboard2.placeShipRandomly(1);
-    gameboard2.placeShipRandomly(1);
-    gameboard2.placeShipRandomly(1);
-    gameboard2.placeShipRandomly(1);
+
+    // UNCOMMENT LATER: placing enemy ships randomly
+    // gameboard2.placeShipRandomly(4);
+    // gameboard2.placeShipRandomly(3);
+    // gameboard2.placeShipRandomly(3);
+    // gameboard2.placeShipRandomly(2);
+    // gameboard2.placeShipRandomly(2);
+    // gameboard2.placeShipRandomly(2);
+    // gameboard2.placeShipRandomly(1);
+    // gameboard2.placeShipRandomly(1);
+    // gameboard2.placeShipRandomly(1);
+    // gameboard2.placeShipRandomly(1);
 
     // const result = gameboard1.placeShip(1, 0, 0, true);
     // console.log(result);
@@ -92,6 +136,7 @@ const gameLoop = () => {
 
   const handlePlayerClick = (e) => {
     const boxDom = e.target;
+    // console.log("attempt", e.target.dataset);
     const [x, y] = UIcontroller.getXandY(e);
     const shipIndex = UIcontroller.getBoxDOMsShipIndex(enemyGameboard, x, y);
     // console.log("evaluating", boxDom.dataset.hit);
@@ -180,4 +225,4 @@ const gameLoop = () => {
   playersTurn();
 };
 
-gameLoop();
+// gameLoop();

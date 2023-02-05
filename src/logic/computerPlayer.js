@@ -2,7 +2,7 @@ export default function enemyPlayer(humanBoard) {
   // min is inclusive max is exclusive
 
   const movesDone = [];
-  console.log(movesDone);
+  // console.log(movesDone);
   const getRandomCoord = () => {
     const x = Math.floor(Math.random() * 10);
     const y = Math.floor(Math.random() * 10);
@@ -18,7 +18,7 @@ export default function enemyPlayer(humanBoard) {
 
   const attack = () => {
     const [x, y] = getRandomCoord();
-    console.log("random coord", x, y);
+    // console.log("random coord", x, y);
 
     const isHit = humanBoard.receiveAttack(x, y);
     movesDone.push([x, y]);

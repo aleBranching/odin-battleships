@@ -15,19 +15,6 @@ export default function Gameboard() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
 
-  const positionGameArena = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  ];
-
   const currentShipsOBJ = [
     null,
     Ship(4),
@@ -168,7 +155,7 @@ export default function Gameboard() {
           const anY = coordinate[1];
 
           // in gamearena first have to access Y
-
+          //  Swapped here
           if (gameArena[anY][anX] !== 0) {
             allowed = false;
           }
@@ -196,6 +183,7 @@ export default function Gameboard() {
         const newx = aCoordinate[0];
         const newy = aCoordinate[1];
 
+        // swapped here
         gameArena[newy][newx] = shipOBJIndex;
       });
     } else {
@@ -203,6 +191,60 @@ export default function Gameboard() {
     }
   };
 
+  // get placement info of ships that are legal and get a gameboard to render a preview
+
+  const positionAllShipsRandomlyTemplate = () => {
+    const result = [];
+
+    const positionGameArena = [
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+
+    const lengths = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+
+    let lengthsIndex = -1;
+    const tryRandomPlacement = () => {
+      try {
+        const [x, y] = getRandomCoord();
+        const horizontally = getTrueOrFalse();
+
+        lengthsIndex += 1;
+
+        if (lengthsIndex === 10) {
+          return;
+        } else {
+          result.push(
+            positionShipRandomly(
+              positionGameArena,
+              lengths[lengthsIndex],
+              x,
+              y,
+              horizontally
+            )
+          );
+
+          return tryRandomPlacement();
+        }
+      } catch (error) {
+        lengthsIndex -= 1;
+        return tryRandomPlacement();
+      }
+    };
+    tryRandomPlacement();
+
+    return [result, positionGameArena];
+  };
+
+  // for the template
   const positionShipRandomly = (fakeArena, length, x, y, horizontally) => {
     // test validity of co-ord or amount of ships
     if (x < 0 || y < 0 || x > 10 || y > 10) {
@@ -253,7 +295,7 @@ export default function Gameboard() {
 
           // in gamearena first have to access Y
 
-          if (positionGameArena[anY][anX] !== 0) {
+          if (fakeArena[anY][anX] !== 0) {
             allowed = false;
           }
         });
@@ -280,12 +322,19 @@ export default function Gameboard() {
         const newx = aCoordinate[0];
         const newy = aCoordinate[1];
 
-        gameArena[newy][newx] = 1;
+        fakeArena[newy][newx] = 1;
       });
+      return {
+        x: checkedCoord[0][0],
+        y: checkedCoord[0][1],
+        length,
+        horizontally,
+      };
     } else {
       throw new Error("most likely ship is overlaping");
     }
   };
+
   const missedShots = [];
 
   const receiveAttack = (x, y) => {
@@ -310,7 +359,6 @@ export default function Gameboard() {
     }
     return false;
   };
-  console.log("test");
 
   return {
     placeShip,
@@ -320,5 +368,6 @@ export default function Gameboard() {
     missedShots,
     currentShipsOBJ,
     placeShipRandomly,
+    positionAllShipsRandomlyTemplate,
   };
 }

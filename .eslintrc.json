@@ -18,7 +18,8 @@
     "no-unused-vars": "warn",
     "no-plusplus": "off",
     "no-continue": "off",
-    "no-use-before-define": "warn"
+    "no-use-before-define": "warn",
+    "no-else-return": "off"
   },
   "plugins": ["jest"]
 }

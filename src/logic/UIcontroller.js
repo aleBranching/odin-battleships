@@ -2,10 +2,11 @@ import Gameboard from "./gameboard";
 
 export default (function UIcontroller() {
   const getBoxDOM = (area, x, y) =>
-    document.querySelector(`.${area} .row[data-x="${x}"] .box[data-y="${y}"]`);
+    document.querySelector(`.${area} .row[data-y="${y}"] .box[data-x="${x}"]`);
 
   const renderExistingBoats = (gameArena, playerAreaDOM) => {
     const updateEachDOMCoordinate = ([x, y]) => {
+      // TODO: figure out why the coordinates need to be swapped here
       getBoxDOM(playerAreaDOM, x, y).style.backgroundColor = "grey";
     };
 
@@ -16,6 +17,34 @@ export default (function UIcontroller() {
       } else {
         aShip.coordinates.forEach(updateEachDOMCoordinate);
       }
+    });
+  };
+
+  const resetTemplateColours = () => {
+    // let positionArea = document.querySelector(".positionArea")
+
+    const updateEachDOMCoordinate = (x, y) => {
+      getBoxDOM("positionArea", x, y).style.backgroundColor = "white";
+    };
+
+    for (let x = 0; x < 10; x++) {
+      for (let y = 0; y < 10; y++) {
+        updateEachDOMCoordinate(x, y);
+      }
+    }
+  };
+
+  const renderTemplateBoats = (gameArenaCoordinates) => {
+    const updateEachDOMCoordinate = (x, y) => {
+      getBoxDOM("positionArea", x, y).style.backgroundColor = "grey";
+    };
+
+    gameArenaCoordinates.forEach((aRow, yIndex) => {
+      aRow.forEach((aRowCoord, xIndex) => {
+        if (gameArenaCoordinates[yIndex][xIndex] === 1) {
+          updateEachDOMCoordinate(xIndex, yIndex);
+        }
+      });
     });
   };
 
@@ -42,9 +71,10 @@ export default (function UIcontroller() {
     });
   };
 
+  // swapped here
   const getXandY = (e) => {
-    const { y } = e.target.dataset;
-    const { x } = e.target.parentElement.dataset;
+    const { x } = e.target.dataset;
+    const { y } = e.target.parentElement.dataset;
 
     return [x, y];
   };
@@ -57,5 +87,7 @@ export default (function UIcontroller() {
     getBoxDOMsShipIndex,
     changeBoxColour,
     toggleHovering,
+    renderTemplateBoats,
+    resetTemplateColours,
   };
 })();
