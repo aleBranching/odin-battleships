@@ -21,8 +21,8 @@ randomiseBTN.addEventListener("click", () => {
 
   templateArena = positionGameArena;
   templatePositions = result;
-  console.log("the positions", result);
-  console.table(positionGameArena);
+  // console.log("the positions", result);
+  // console.table(positionGameArena);
   UIcontroller.renderTemplateBoats(positionGameArena);
 });
 
@@ -33,31 +33,7 @@ submitPlacements.addEventListener("click", () => {
 });
 
 const gameLoop = () => {
-  // [4, 4, 4, 4, 0, 0, 0, 0, 0, 0],
-  // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-
   const setUpPlacements = (gameboard1, gameboard2) => {
-    // gameboard1.placeShip(3, 6, 0, true);playerGameboard
-    // gameboard1.placeShip(3, 0, 1, true);
-    // gameboard1.placeShip(2, 0, 3, true);
-    // gameboard1.placeShip(2, 0, 5, true);
-    // gameboard1.placeShip(2, 9, 6, false);
-    // gameboard1.placeShip(1, 2, 7, true);
-    // gameboard1.placeShip(1, 3, 8, true);
-    // gameboard1.placeShip(1, 4, 9, true);
-    // gameboard1.placeShip(1, 7, 9, true);
-    // // debugger;
-    // gameboard1.placeShip(4, 0, 0, true);
-    // debugger;
-
     for (let i = 0; i < 10; i++) {
       gameboard1.placeShip(
         templatePositions[i].length,
@@ -67,64 +43,18 @@ const gameLoop = () => {
       );
     }
 
-    console.table(gameboard1.gameArena);
-    console.table(templateArena);
-
-    for (let i = 0; i < 10; i++) {
-      gameboard2.placeShip(
-        templatePositions[i].length,
-        templatePositions[i].x,
-        templatePositions[i].y,
-        templatePositions[i].horizontally
-      );
-    }
-
-    console.log("enemyBoard");
-    console.table(gameboard2.gameArena);
-    console.log("object of 4 coord", gameboard2.currentShipsOBJ[1].coordinates);
-
-    // gameboard1.placeShipRandomly(4);
-    // gameboard1.placeShipRandomly(3);
-    // gameboard1.placeShipRandomly(3);
-    // gameboard1.placeShipRandomly(2);
-    // gameboard1.placeShipRandomly(2);
-    // gameboard1.placeShipRandomly(2);
-    // gameboard1.placeShipRandomly(1);
-    // gameboard1.placeShipRandomly(1);
-    // gameboard1.placeShipRandomly(1);
-    // gameboard1.placeShipRandomly(1);
-    // debugger;
-
-    // UNCOMMENT LATER: placing enemy ships randomly
-    // gameboard2.placeShipRandomly(4);
-    // gameboard2.placeShipRandomly(3);
-    // gameboard2.placeShipRandomly(3);
-    // gameboard2.placeShipRandomly(2);
-    // gameboard2.placeShipRandomly(2);
-    // gameboard2.placeShipRandomly(2);
-    // gameboard2.placeShipRandomly(1);
-    // gameboard2.placeShipRandomly(1);
-    // gameboard2.placeShipRandomly(1);
-    // gameboard2.placeShipRandomly(1);
-
-    // const result = gameboard1.placeShip(1, 0, 0, true);
-    // console.log(result);
-
-    // gameboard2.placeShip(4, 0, 0, true);
-    // gameboard2.placeShip(3, 6, 0, true);
-    // gameboard2.placeShip(3, 0, 1, true);
-    // gameboard2.placeShip(2, 0, 3, true);
-    // gameboard2.placeShip(2, 0, 5, true);
-    // gameboard2.placeShip(2, 9, 6, false);
-    // gameboard2.placeShip(1, 2, 7, true);
-    // gameboard2.placeShip(1, 3, 8, true);
-    // gameboard2.placeShip(1, 4, 9, true);
-    // gameboard2.placeShip(1, 7, 9, true);
+    gameboard2.placeShipRandomly(4);
+    gameboard2.placeShipRandomly(3);
+    gameboard2.placeShipRandomly(3);
+    gameboard2.placeShipRandomly(2);
+    gameboard2.placeShipRandomly(2);
+    gameboard2.placeShipRandomly(2);
+    gameboard2.placeShipRandomly(1);
+    gameboard2.placeShipRandomly(1);
+    gameboard2.placeShipRandomly(1);
+    gameboard2.placeShipRandomly(1);
   };
 
-  //   debugger;
-
-  //   while (!gameOver) {
   const playerGameboard = Gameboard();
   const enemyGameboard = Gameboard();
   setUpPlacements(playerGameboard, enemyGameboard);
@@ -224,5 +154,3 @@ const gameLoop = () => {
 
   playersTurn();
 };
-
-// gameLoop();
